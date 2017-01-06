@@ -26,7 +26,7 @@ class Word(db.Model):
 
     @property
     def syllables(self):
-        return word_to_syllables(self.word)
+        return word_to_syllables(self.word.lower())
 
     @property
     def leading_syllable(self):
