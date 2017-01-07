@@ -5,6 +5,7 @@ from flask_migrate    import Migrate, MigrateCommand
 from flask            import request
 # wrapper around hyphenate_word so everything doesnt break if we rewrite that later
 from hyphenate        import hyphenate_word as word_to_syllables
+from Class_Syllable_Helper import Syllable_Helper
 import pronouncing
 import json
 
@@ -37,21 +38,32 @@ class Word(db.Model):
         return self.syllables[-1]
 
     @property
-    def first_phone(self):
+    def first_phones(self):
         if self.leading_phones:
-            return self.leading_phones
+            first_phones = self.leading_phones
         else:
-            phones = pronouncing.phones_for_word(self.leading_syllable)
-        return phones
+            phones = pronouncing.phones_for_word(self.word.lower())
+            if len(phones) > 0:
+                helper = Syllable_Helper()
+                phones_result = helper.phones_to_syllables(self.syllables, phones[0])
+                if phones_result:
+                    first_phones = phones_result[0][1]
+        return first_phones
 
     @property
-    def last_phone(self):
+    def last_phones(self):
+        last_phones = []
         if self.trailing_phones:
-            phones = self.trailing_phones
+            last_phones = self.trailing_phones
         else:
             # To be replaced with method to actually get it
-            phones = pronouncing.phones_for_word(self.trailing_syllable)
-        return phones
+            phones = pronouncing.phones_for_word(self.word.lower())
+            if len(phones) > 0:
+                helper = Syllable_Helper()
+                phones_result = helper.phones_to_syllables(self.syllables, phones[0])
+                if phones_result:
+                    last_phones = phones_result[-1][1]
+        return last_phones
 
     def __init__(self, word = "", wordtype = "", definition = ""):
         self.word       = word
