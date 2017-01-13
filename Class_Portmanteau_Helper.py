@@ -9,6 +9,7 @@ class Portmanteau_Helper:
         word = Word(string)
         last_phones = word.last_phones
 
+
         # Pagination stuff
         start = page_size * page
         stop = start  + page_size
@@ -16,6 +17,7 @@ class Portmanteau_Helper:
         # Format phones for pronouncing
         # Evenutally this will be a dynamically selected regex
         search_string = " ".join(last_phones)
+        # NOTE: this isnt getting the result i want
         matches = pronouncing.search("^" + search_string)
 
         # See which of these have entries in our english dictionary
@@ -28,14 +30,23 @@ class Portmanteau_Helper:
         # might be from word1 in some cases
         letters_to_remove = s.syllable_from_phones(word2_obj.word, overlapping_phones)
 
-        second_part = re.sub(letters_to_remove, "", word2_obj.word)
-        portmanteau = word1 + second_part
+        # TODO: This is a stopgap solution
+        if len(letters_to_remove) > 0:
+            # NOTE: I might need to remove everything before where this matches too
+            # index_of_match = word2_obj.word.index(letters_to_remove)
+            # index_of_end_of_match = index_of_match + len(letters_to_remove)
+            # second_part = word2_obj.word[index_of_end_of_match:]
+            second_part = re.sub(letters_to_remove, "", word2_obj.word)
+            portmanteau = word1 + second_part
 
-        result = {
-        "portmanteau": portmanteau,
-        "word1": word1,
-        "word2": word2_obj.word
-        }
+            result = {
+            "portmanteau": portmanteau,
+            "word1": word1,
+            "word2": word2_obj.word
+            }
+        else:
+            result = False
+
 
         return result
 
@@ -44,6 +55,10 @@ class Portmanteau_Helper:
         portmantarray = []
         for candidate in candidates["matches"]:
             portmanteau = self.make_portmanteau(word, candidate, candidates["overlapping_phones"])
-            portmantarray.append(portmanteau)
+            if portmanteau:
+                portmantarray.append(portmanteau)
+            else:
+                print "Why was " + candidate.word + " a match?"
+
 
         return portmantarray

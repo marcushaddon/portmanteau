@@ -55,10 +55,8 @@ class Word(db.Model):
     def last_phones(self):
         last_phones = []
         if self.trailing_phones:
-            print "I got phones"
             last_phones = self.trailing_phones
         else:
-            print "I make my own phoens"
             # To be replaced with method to actually get it
             phones = pronouncing.phones_for_word(self.word.lower())
             if len(phones) > 0:

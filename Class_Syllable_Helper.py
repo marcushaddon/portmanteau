@@ -21,7 +21,7 @@ class Syllable_Helper:
     'AA': r"(a[hw]*)|o",
     'AE': r"a",
     'AH': r"[au]h*",
-    'AO': r"o|a",
+    'AO': r"oa*",
     'AW': r"ow",
     'AY': r"ei|y|i",
     'B': r"b",
@@ -123,13 +123,10 @@ class Syllable_Helper:
             pattern = self.phoneme_map[re.sub(r"\d", "", phone)]
             master_pattern += "(" + pattern + ")"
 
-        print "MASTER PATTERN: " + master_pattern
-        print "WORD: " + word
         match = re.search(master_pattern, word, re.IGNORECASE)
         if match:
             return match.group()
         else:
-            print "Syllables_from_phones: Couldnt find match for {0} in {1}".format(phones_string, word)
             return ""
 
 # pro = [u'S IH1 L IY0']
