@@ -48,7 +48,7 @@ class Syllable_Helper:
     'R': r"r+",
     'S': r"s+|c", #tricky
     'SH': r"[sc]h", # hmm, z?
-    'T': r"t",
+    'T': r"t+",
     'TH': r"th",
     'UH': r"oo|oul",
     'UW': r"o[ou]|ew",
@@ -115,6 +115,22 @@ class Syllable_Helper:
 
 
         return mapped_syllables_array
+
+    def syllable_from_phones(self, word, phones_string):
+        master_pattern = r""
+        phones_array = phones_string.split(" ")
+        for phone in phones_array:
+            pattern = self.phoneme_map[re.sub(r"\d", "", phone)]
+            master_pattern += "(" + pattern + ")"
+
+        print "MASTER PATTERN: " + master_pattern
+        print "WORD: " + word
+        match = re.search(master_pattern, word, re.IGNORECASE)
+        if match:
+            return match.group()
+        else:
+            print "Syllables_from_phones: Couldnt find match for {0} in {1}".format(phones_string, word)
+            return ""
 
 # pro = [u'S IH1 L IY0']
 # syll = ['sil', 'ly']

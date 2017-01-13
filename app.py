@@ -18,7 +18,7 @@ manager.add_command('db', MigrateCommand)
 def get_candidates(word):
 	helper = Portmanteau_Helper()
 	candidates = helper.get_matches(word)
-	return str(candidates)
+	return str(candidates["matches"])
 
 
 
