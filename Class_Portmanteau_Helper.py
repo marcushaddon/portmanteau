@@ -17,12 +17,13 @@ class Portmanteau_Helper:
         # Format phones for pronouncing
         # Evenutally this will be a dynamically selected regex
         search_string = " ".join(last_phones)
-        # NOTE: this isnt getting the result i want
-        matches = pronouncing.search("^" + search_string)
+        # for now just search for vowel sounds and general consonant patterns
+        search_pattern = re.sub(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", "[BCDFGHJKLMNPQRSTVWXZ]+", search_string)
+        matches = pronouncing.search("^" + search_pattern)
 
         # See which of these have entries in our english dictionary
         filtered_matches = db.session.query(Word).distinct(Word.word).group_by(Word.word).filter(Word.word.in_(matches)).all() # need to do pagination HERE
-        return { "overlapping_phones_regex": search_string, "matches": filtered_matches }
+        return { "overlapping_phones_regex": search_pattern, "matches": filtered_matches }
 
     def make_portmanteau(self, word1, word2_obj, overlapping_phones_regex):
 
@@ -32,6 +33,7 @@ class Portmanteau_Helper:
         pronounciations = word2_obj.phones
         possible_pronounciation = 0
         possible_pronounciations = len(pronounciations)
+        # print word2_obj.word + " HAS " + str(possible_pronounciations) + " pronunciations"
         pronounciation = pronounciations[possible_pronounciation]
         match = re.search(overlapping_phones_regex, pronounciation)
 
@@ -41,7 +43,6 @@ class Portmanteau_Helper:
             match = re.search(overlapping_phones_regex, pronounciation)
 
         overlapping_phones = match.group()
-        print "FOUND A MATCH " + overlapping_phones
         letters_to_remove = s.syllable_from_phones(word2_obj.word, overlapping_phones)
 
         # TODO: This is a stopgap solution

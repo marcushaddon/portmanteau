@@ -29,7 +29,7 @@ class Syllable_Helper:
     'D': r"d",
     'DH': r"th",
     'EH': r"e",
-    'ER': r"h*[ieu]re*", # er|ir|ur|or ?
+    'ER': r"h*[iaoeu]r+e*", 
     'EY': r"ay|e[iy]|a", #hmmm
     'F': r"f",
     'G': r"g",
@@ -129,7 +129,7 @@ class Syllable_Helper:
         else:
             return ""
 
-    
+
 # pro = [u'S IH1 L IY0']
 # syll = ['sil', 'ly']
 # helper = Syllable_Helper()
