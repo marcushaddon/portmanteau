@@ -22,12 +22,26 @@ class Portmanteau_Helper:
 
         # See which of these have entries in our english dictionary
         filtered_matches = db.session.query(Word).distinct(Word.word).group_by(Word.word).filter(Word.word.in_(matches)).all() # need to do pagination HERE
-        return { "overlapping_phones": search_string, "matches": filtered_matches }
+        return { "overlapping_phones_regex": search_string, "matches": filtered_matches }
 
-    def make_portmanteau(self, word1, word2_obj, overlapping_phones):
+    def make_portmanteau(self, word1, word2_obj, overlapping_phones_regex):
+
         s = Syllable_Helper()
         # Eventually we will not be given over_lapping_phones, but over_lapping_phones_regex, and we'll have to derive the overlapping phones using the regex and the phones for the word
         # might be from word1 in some cases
+        pronounciations = word2_obj.phones
+        possible_pronounciation = 0
+        possible_pronounciations = len(pronounciations)
+        pronounciation = pronounciations[possible_pronounciation]
+        match = re.search(overlapping_phones_regex, pronounciation)
+
+        while possible_pronounciation < possible_pronounciations and match == None:
+            possible_pronounciation += 1
+            pronounciation = word2_obj.phones[possible_pronounciation]
+            match = re.search(overlapping_phones_regex, pronounciation)
+
+        overlapping_phones = match.group()
+        print "FOUND A MATCH " + overlapping_phones
         letters_to_remove = s.syllable_from_phones(word2_obj.word, overlapping_phones)
 
         # TODO: This is a stopgap solution
@@ -54,7 +68,7 @@ class Portmanteau_Helper:
         candidates = self.get_matches(word)
         portmantarray = []
         for candidate in candidates["matches"]:
-            portmanteau = self.make_portmanteau(word, candidate, candidates["overlapping_phones"])
+            portmanteau = self.make_portmanteau(word, candidate, candidates["overlapping_phones_regex"])
             if portmanteau:
                 portmantarray.append(portmanteau)
             else:

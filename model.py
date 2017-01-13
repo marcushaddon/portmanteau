@@ -30,6 +30,10 @@ class Word(db.Model):
         return word_to_syllables(self.word.lower())
 
     @property
+    def phones(self):
+        return pronouncing.phones_for_word(self.word.lower())
+
+    @property
     def leading_syllable(self):
         return self.syllables[0]
 
