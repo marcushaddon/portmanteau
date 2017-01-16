@@ -17,7 +17,7 @@ class Portmanteau_Helper:
         # Format phones for pronouncing
         # Evenutally this will be a dynamically selected regex
         search_string = " ".join(last_phones)
-        # for now just search for vowel sounds and general consonant patterns
+        # Replace any consonant group with a regex catching any consonant group
         search_pattern = re.sub(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", "[BCDFGHJKLMNPQRSTVWXZ]+", search_string)
         matches = pronouncing.search("^" + search_pattern)
 
@@ -43,7 +43,7 @@ class Portmanteau_Helper:
             match = re.search(overlapping_phones_regex, pronounciation)
 
         overlapping_phones = match.group()
-        letters_to_remove = s.syllable_from_phones(word2_obj.word, overlapping_phones)
+        letters_to_remove = s.map_letters_to_phones(word2_obj.word, overlapping_phones)
 
         # TODO: This is a stopgap solution
         if len(letters_to_remove) > 0:
@@ -60,6 +60,7 @@ class Portmanteau_Helper:
             "word2": word2_obj.word
             }
         else:
+            print "Why was " + pronounciation + " a match for " + overlapping_phones_regex + "?"
             result = False
 
 
@@ -73,7 +74,7 @@ class Portmanteau_Helper:
             if portmanteau:
                 portmantarray.append(portmanteau)
             else:
-                print "Why was " + candidate.word + " a match?"
+                print word + " failed"
 
 
         return portmantarray

@@ -1,39 +1,46 @@
+import re
+import pronouncing
 from Class_Syllable_Helper import Syllable_Helper
-import pronouncing as p
-import hyphenate as h
+# (c+vc(?!v))|(c+v)|(vc) basic pattern, need to detect dipthongs
 
-myguy = Syllable_Helper()
+v = r"([A-Z]+[0-2]\s)"
+c = r"([A-Z]+\s)"
 
-def test_word(word):
-    phones = p.phones_for_word(word)
-    if len(phones) < 1:
-        print "Couldnt get phones for: " + word
-        return
-    phone_string = phones[0]
-    syllables = h.hyphenate_word(word)
-    if not syllables:
-        print "Couldnt get syllables for: " + word
-        return
-    result = myguy.phones_to_syllables(syllables, phone_string)
-    print "RESULT FOR >>" + word + "<<"
-    for piece in result:
-        print piece[0] + ": " + ' - '.join(piece[1])
+# syllable_regex = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)([A-Z]+\s)(?!([A-Z]+[0-2]\s)))|(([A-Z]+\s)+([A-Z]+[0-2]\s))|(([A-Z]+[0-2]\s)([A-Z]+\s))"
+cvc = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)+([A-Z]+\s)(?!([A-Z]+[0-2]\s)))"
+cv = r"(([A-Z]+\s)+([A-Z]+[0-2]\s))"
+vc = r"(([A-Z]+[0-2]\s)([A-Z]+\s))"
 
-word_list = [
-'dog',
-'pizza',
-'airplane',
-'cricket',
-'Silly', # might need to handle split between double consonants
-'bumper'
-]
-
-def run_test(word_list):
-    for word in word_list:
-        test_word(word)
+syllable_regex = cvc + "|" + cv + "|" + vc
 
 
+def split_phones_into_syllables(phones_string):
+    phones_string += " "
+    print "PHONES STRING: " + phones_string
+    phones_syllables_array = []
 
+    while len(phones_string) > 0:
+        syllable_match = re.search(syllable_regex, phones_string)
+        if syllable_match:
+            print "FOUND A SYLLABLE: " + syllable_match.group()
+            syllable = syllable_match.group()
+            phones_syllables_array.append(syllable.rstrip())
+            phones_string = phones_string.replace(syllable, "")
+        else:
+            print "COULDNT FIND SYLLABLE" + str(syllable_match)
+            print phones_string
+    return phones_syllables_array
 
+word = "afterglow"
+phones = pronouncing.phones_for_word(word)[0]
+phones_syllables = split_phones_into_syllables(phones)
+print phones_syllables
 
-run_test(word_list)
+letter_syllable_array = []
+
+helper = Syllable_Helper()
+for i in range(0, len(phones_syllables)):
+    letter_syllable = helper.map_letters_to_phones(word, phones_syllables[i])
+    letter_syllable_array.append(letter_syllable)
+
+print letter_syllable_array

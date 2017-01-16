@@ -22,18 +22,18 @@ class Syllable_Helper:
     'AE': r"a",
     'AH': r"[au]h*",
     'AO': r"oa*",
-    'AW': r"ow",
+    'AW': r"o[wu]",
     'AY': r"ei|y|i",
     'B': r"b",
     'CH': r"ch",
     'D': r"d",
     'DH': r"th",
     'EH': r"e",
-    'ER': r"h*[iaoeu]r+e*", 
+    'ER': r"h*[iaoeu]r+e*",
     'EY': r"ay|e[iy]|a", #hmmm
     'F': r"f",
     'G': r"g",
-    'HH': r"h",
+    'HH': r"w*h",
     'IH': r"i|u|e",
     'IY': r"ea|ie|e+|y|i", # hmmm
     'JH': r"j|d*ge*",
@@ -45,13 +45,13 @@ class Syllable_Helper:
     'OW': r"ow*a*",
     'OY': r"oy*i*",
     'P': r"p+",
-    'R': r"r+",
-    'S': r"s+|c", #tricky
+    'R': r"r+e*",
+    'S': r"s+e*|c", #tricky
     'SH': r"[sc]h", # hmm, z?
     'T': r"t+",
     'TH': r"th",
     'UH': r"oo|oul",
-    'UW': r"o[ou]|ew",
+    'UW': r"o*[ou]+|ew", # o[ou]|ew
     'V': r"v",
     'W': r"wh*",
     'Y': r"y",
@@ -59,9 +59,12 @@ class Syllable_Helper:
     'ZH': r"s" # hmm
     }
 
+    syllable_regex = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)([A-Z]+\s)(?!([A-Z]+[0-2]\s)))|(([A-Z]+\s)+([A-Z]+[0-2]\s))|(([A-Z]+[0-2]\s)([A-Z]+\s))"
+
 # output should be:
 # [['mar', ['M', 'AA', 'R']], ['cus', ['K', 'AH', 'S']] ]
 
+    # Map phones to broken syllables
     def phones_to_syllables(self, syllables_array, phones_string):
         # print "----------NEW TEST---------"
 
@@ -116,7 +119,8 @@ class Syllable_Helper:
 
         return mapped_syllables_array
 
-    def syllable_from_phones(self, word, phones_string):
+    # Extract letter group from word that corresponds to a group of phones
+    def map_letters_to_phones(self, word, phones_string):
         master_pattern = r""
         phones_array = phones_string.split(" ")
         for phone in phones_array:
@@ -129,8 +133,20 @@ class Syllable_Helper:
         else:
             return ""
 
+    def split_phones_into_syllables(self, phones_string):
+        phones_string += " "
+        phones_syllables_array = []
 
-# pro = [u'S IH1 L IY0']
-# syll = ['sil', 'ly']
-# helper = Syllable_Helper()
-# print helper.phones_to_syllables(syll, pro[0])
+        while len(phones_string) > 0:
+            syllable_match = re.search(self.syllable_regex, phones_string)
+            if syllable_match:
+                syllable = syllable_match.group()
+                phones_syllables_array.append(syllable.rstrip())
+                phones_string = phones_string.replace(syllable, "")
+            else:
+                # TEMPORARY
+                print "SYLLABLE HELPER OUT OF IDEAS"
+                phones_syllables_array[-1] += phones_string.rstrip()
+                phones_string = ""
+
+        return phones_syllables_array

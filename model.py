@@ -25,6 +25,8 @@ class Word(db.Model):
     leading_phones  = db.Column(db.String(20))
     trailing_phones = db.Column(db.String(20))
 
+
+
     @property
     def syllables(self):
         return word_to_syllables(self.word.lower())
@@ -62,12 +64,15 @@ class Word(db.Model):
             last_phones = self.trailing_phones
         else:
             # To be replaced with method to actually get it
-            phones = pronouncing.phones_for_word(self.word.lower())
-            if len(phones) > 0:
-                helper = Syllable_Helper()
-                phones_result = helper.phones_to_syllables(self.syllables, phones[0])
-                if phones_result:
-                    last_phones = phones_result[-1][1]
+            helper = Syllable_Helper()
+            syllables = helper.split_phones_into_syllables(self.phones[0])
+            last_phones = syllables[-1].split()
+            # phones = pronouncing.phones_for_word(self.word.lower())
+            # if len(phones) > 0:
+            #     helper = Syllable_Helper()
+            #     phones_result = helper.phones_to_syllables(self.syllables, phones[0])
+            #     if phones_result:
+            #         last_phones = phones_result[-1][1]
         return last_phones
 
     def __init__(self, word = "", wordtype = "", definition = ""):
