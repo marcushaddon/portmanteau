@@ -1,0 +1,7 @@
+phone,word string,phones_array,total
+V,Edelweiss,[u'EY1 D AH0 L V AY2 S'],
+V,Of,"[u'AH1 V', u'AH0 V']",
+V,Penna,"[u'P EH1 N AH0', u'P EH2 N S IH0 L V EY1 N Y AH0']",
+V,Rep,"[u'R EH1 P', u'R EH0 P R IY0 Z EH1 T AH0 T IH0 V']",
+V,Thereof,[u'DH EH2 R AH1 V'],
+success:,5,out of,2651

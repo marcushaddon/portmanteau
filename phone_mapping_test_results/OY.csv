@@ -1,0 +1,4 @@
+phone,word string,phones_array,total
+OY,Lawyer,"[u'L AO1 Y ER0', u'L OY1 ER0']",
+OY,Sawyer,"[u'S AO1 Y ER0', u'S OY1 ER0']",
+success:,2,out of,294

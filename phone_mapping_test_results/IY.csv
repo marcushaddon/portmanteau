@@ -1,0 +1,16 @@
+phone,word string,phones_array,total
+IY,Ba,"[u'B IY2 EY1', u'B AA1']",
+IY,Baa,[u'B IY2 EY2 EY1'],
+IY,Bologna,"[u'B AH0 L OW1 N IY0', u'B AH0 L OW1 NG AA2']",
+IY,C,[u'S IY1'],
+IY,Cod,"[u'K AA1 D', u'S IY1 OW1 D IY1']",
+IY,D,[u'D IY1'],
+IY,Dak,"[u'D AE1 K', u'D IY1 EY1 K EY1']",
+IY,Dram,"[u'D R AE1 M', u'D IY1 R AE2 M']",
+IY,Fop,"[u'F AO1 P', u'EH1 F OW1 P IY1']",
+IY,G,[u'JH IY1'],
+IY,Oad,[u'OW1 EY1 D IY1'],
+IY,Th,[u'T IY1 EY1 CH'],
+IY,Uva,"[u'Y UW1 V AH0', u'Y UW1 V IY1 EY1']",
+IY,V,[u'V IY1'],
+success:,14,out of,7210

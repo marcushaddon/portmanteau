@@ -1,0 +1,8 @@
+phone,word string,phones_array,total
+AA,Current,"[u'K ER1 AH0 N T', u'K ER1 N T', u'K AA1 R AH0 N T']",
+AA,Ensemble,[u'AA0 N S AA1 M B AH0 L'],
+AA,Entree,[u'AA1 N T R EY2'],
+AA,Entrepreneur,"[u'AA2 N T R AH0 P R AH0 N ER1', u'AA2 N T R AH0 P R AH0 N UH1 R']",
+AA,Ers,"[u'ER1 Z', u'IY1 AA1 R EH1 S']",
+AA,Genre,[u'ZH AA1 N R AH0'],
+success:,6,out of,3860

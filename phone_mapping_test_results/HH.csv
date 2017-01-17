@@ -1,0 +1,8 @@
+phone,word string,phones_array,total
+HH,Junta,[u'HH UH1 N T AH0'],
+HH,One,"[u'W AH1 N', u'HH W AH1 N']",
+HH,Western,"[u'W EH1 S T ER0 N', u'HH W EH1 S T ER0 N']",
+HH,Wetting,"[u'W EH1 T IH0 NG', u'HH W EH1 T IH0 NG']",
+HH,Wicket,"[u'W IH1 K AH0 T', u'HH W IH1 K AH0 T']",
+HH,Wo,"[u'W OW1', u'HH W OW1']",
+success:,6,out of,1576

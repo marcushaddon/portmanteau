@@ -1,0 +1,4 @@
+phone,word string,phones_array,total
+M,Sandwich,"[u'S AE1 N D W IH0 CH', u'S AE1 N W IH0 CH', u'S AE1 M W IH0 CH']",
+M,Sandwiched,"[u'S AE1 N D W IH2 CH T', u'S AE1 N W IH2 CH T', u'S AE1 M W IH2 CH T']",
+success:,2,out of,6158
