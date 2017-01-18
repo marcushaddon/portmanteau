@@ -20,11 +20,11 @@ class Syllable_Helper:
     phoneme_map = {
     'AA': r"(a[hw]*)|o",
     'AE': r"a",
-    'AH': r"[auo+ei]h*", #r"[au]h*"
+    'AH': r"[auo+ei]h*|ou", #r"[au]h*"
     'AO': r"oa*|a", #oa*
     'AW': r"[ao][wu]",
     'AY': r"ei|y|i",
-    'B': r"b",
+    'B': r"[bp]",
     'CH': r"c+h*|t",
     'D': r"d",
     'DH': r"th",
@@ -53,7 +53,7 @@ class Syllable_Helper:
     'UH': r"o[ou]*|o*ul*",
     'UW': r"o*[ou]+|ew", # o[ou]|ew
     'V': r"v",
-    'W': r"u|q|wh*",
+    'W': r"u|q|wh*|o",
     'Y': r"[yu]",
     'Z': r"[zsx]",
     'ZH': r"s|ge*" # hmm
@@ -131,6 +131,7 @@ class Syllable_Helper:
         if match:
             return match.group()
         else:
+            print "Why was " + word + " a match for " + phones_string
             return ""
 
     def split_phones_into_syllables(self, phones_string):

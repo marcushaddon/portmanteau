@@ -20,7 +20,13 @@ def get_candidates(word):
 	candidates = helper.get_matches(word)
 	return str(candidates["matches"])
 
-
+@app.route('/api/portmanteaus/<word>')
+def get_portmanteaus(word):
+	page_size = request.args.get('page_size') or 20
+	page = request.args.get('page') or 1
+	helper = Portmanteau_Helper()
+	portmanteaus = helper.get_portmanteaus(word, int(page_size), int(page))
+	return json.dumps(portmanteaus)
 
 if __name__ == '__main__':
 	app.run()

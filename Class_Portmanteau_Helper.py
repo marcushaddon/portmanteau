@@ -11,7 +11,7 @@ class Portmanteau_Helper:
 
 
         # Pagination stuff
-        start = page_size * page
+        start = page_size * (page - 1)
         stop = start  + page_size
 
         # Format phones for pronouncing
@@ -22,7 +22,7 @@ class Portmanteau_Helper:
         matches = pronouncing.search("^" + search_pattern)
 
         # See which of these have entries in our english dictionary
-        filtered_matches = db.session.query(Word).distinct(Word.word).group_by(Word.word).filter(Word.word.in_(matches)).all() # need to do pagination HERE
+        filtered_matches = db.session.query(Word).distinct(Word.word).group_by(Word.word).filter(Word.word.in_(matches)).offset(start).limit(page_size).all() # need to do pagination HERE
         return { "overlapping_phones_regex": search_pattern, "matches": filtered_matches }
 
     def make_portmanteau(self, word1, word2_obj, overlapping_phones_regex):
@@ -42,32 +42,34 @@ class Portmanteau_Helper:
             pronounciation = word2_obj.phones[possible_pronounciation]
             match = re.search(overlapping_phones_regex, pronounciation)
 
-        overlapping_phones = match.group()
-        letters_to_remove = s.map_letters_to_phones(word2_obj.word, overlapping_phones)
+        if match:
+            overlapping_phones = match.group()
+            letters_to_remove = s.map_letters_to_phones(word2_obj.word, overlapping_phones)
 
-        # TODO: This is a stopgap solution
-        if len(letters_to_remove) > 0:
-            # NOTE: I might need to remove everything before where this matches too
-            # index_of_match = word2_obj.word.index(letters_to_remove)
-            # index_of_end_of_match = index_of_match + len(letters_to_remove)
-            # second_part = word2_obj.word[index_of_end_of_match:]
-            second_part = re.sub(letters_to_remove, "", word2_obj.word)
-            portmanteau = word1 + second_part
+            # TODO: This is a stopgap solution
+            if len(letters_to_remove) > 0:
+                # NOTE: I might need to remove everything before where this matches too
+                # index_of_match = word2_obj.word.index(letters_to_remove)
+                # index_of_end_of_match = index_of_match + len(letters_to_remove)
+                # second_part = word2_obj.word[index_of_end_of_match:]
+                second_part = re.sub(letters_to_remove, "", word2_obj.word)
+                portmanteau = word1 + second_part
 
-            result = {
-            "portmanteau": portmanteau,
-            "word1": word1,
-            "word2": word2_obj.word
-            }
+                result = {
+                "portmanteau": portmanteau,
+                "word1": word1,
+                "word2": word2_obj.word
+                }
+            else:
+                result = False
         else:
-            print "Why was " + pronounciation + " a match for " + overlapping_phones_regex + "?"
-            result = False
+            print "Why was " + pronunciation + " a match for " + over_lapping_phones_regex
 
 
         return result
 
-    def get_portmanteaus(self, word):
-        candidates = self.get_matches(word)
+    def get_portmanteaus(self, word, page_size=20, page=1):
+        candidates = self.get_matches(word, page_size, page)
         portmantarray = []
         for candidate in candidates["matches"]:
             portmanteau = self.make_portmanteau(word, candidate, candidates["overlapping_phones_regex"])
