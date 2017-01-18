@@ -1,20 +1,6 @@
 phone,word string,phones_array,total
-OW,Beau,[u'B OW1'],
-OW,Beaux,[u'B OW1'],
-OW,Bureau,[u'B Y UH1 R OW0'],
-OW,Bureaucrat,"[u'B Y UH1 R AH0 K R AE2 T', u'B Y UH1 R OW0 K R AE2 T']",
-OW,Bureaus,[u'B Y UH1 R OW0 Z'],
-OW,Chateau,[u'SH AE0 T OW1'],
 OW,Chauvinism,[u'SH OW1 V AH0 N IH2 Z AH0 M'],
 OW,Faux,[u'F OW1'],
 OW,Gauche,[u'G OW1 SH'],
-OW,Plateau,[u'P L AE0 T OW1'],
-OW,Rideau,[u'R IH0 D OW1'],
 OW,Sauterne,[u'S OW0 T ER1 N'],
-OW,Sew,[u'S OW1'],
-OW,Sewed,[u'S OW1 D'],
-OW,Sewing,[u'S OW1 IH0 NG'],
-OW,Sewn,[u'S OW1 N'],
-OW,Tableau,[u'T AH0 B L OW1'],
-OW,Tableaux,[u'T AH0 B L OW1'],
-success:,18,out of,2775
+success:,4,out of,2775

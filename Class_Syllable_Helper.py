@@ -20,43 +20,43 @@ class Syllable_Helper:
     phoneme_map = {
     'AA': r"(a[hw]*)|o",
     'AE': r"a",
-    'AH': r"[au]h*",
-    'AO': r"oa*",
-    'AW': r"o[wu]",
+    'AH': r"[auo+ei]h*", #r"[au]h*"
+    'AO': r"oa*|a", #oa*
+    'AW': r"[ao][wu]",
     'AY': r"ei|y|i",
     'B': r"b",
-    'CH': r"ch",
+    'CH': r"c+h*|t",
     'D': r"d",
     'DH': r"th",
-    'EH': r"e",
+    'EH': r"[ea]",
     'ER': r"h*[iaoeu]r+e*",
     'EY': r"ay|e[iy]|a", #hmmm
-    'F': r"f",
-    'G': r"g",
+    'F': r"f|[gp]h",
+    'G': r"[gx]",
     'HH': r"w*h",
-    'IH': r"i|u|e",
+    'IH': r"[iuey]",
     'IY': r"ea|ie|e+|y|i", # hmmm
-    'JH': r"j|d*ge*",
-    'K': r"k|c",
+    'JH': r"j|d|d*ge*",
+    'K': r"[kcxq]",
     'L': r"l",
     'M': r"m",
     'N': r"ne*",
-    'NG': r"ng",
-    'OW': r"ow*a*",
+    'NG': r"ng*",
+    'OW': r"ow*a*|e[(au)w]",
     'OY': r"oy*i*",
     'P': r"p+",
     'R': r"r+e*",
-    'S': r"s+e*|c", #tricky
-    'SH': r"[sc]h", # hmm, z?
-    'T': r"t+",
+    'S': r"s+e*|c|x", #tricky
+    'SH': r"[sc]h|[tc]i|x|s+", # hmm, z?
+    'T': r"t+|ed",
     'TH': r"th",
-    'UH': r"oo|oul",
+    'UH': r"o[ou]*|o*ul*",
     'UW': r"o*[ou]+|ew", # o[ou]|ew
     'V': r"v",
-    'W': r"wh*",
-    'Y': r"y",
-    'Z': r"z",
-    'ZH': r"s" # hmm
+    'W': r"u|q|wh*",
+    'Y': r"[yu]",
+    'Z': r"[zsx]",
+    'ZH': r"s|ge*" # hmm
     }
 
     syllable_regex = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)([A-Z]+\s)(?!([A-Z]+[0-2]\s)))|(([A-Z]+\s)+([A-Z]+[0-2]\s))|(([A-Z]+[0-2]\s)([A-Z]+\s))"

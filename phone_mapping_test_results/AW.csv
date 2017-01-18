@@ -1,21 +1,11 @@
 phone,word string,phones_array,total
-AW,Chaus,[u'CH AW1 S'],
 AW,Curacao,[u'K Y UH1 R AH0 S AW2'],
-AW,Dauber,[u'D AW1 B ER0'],
-AW,Dauphin,[u'D AW1 F IH0 N'],
 AW,Flutist,"[u'F L UW1 T IH0 S T', u'F L AW1 T IH0 S T']",
-AW,Gaucho,[u'G AW1 CH OW0'],
-AW,Gauchos,[u'G AW1 CH OW0 Z'],
-AW,Hausen,[u'HH AW1 Z AH0 N'],
 AW,Kaolin,"[u'K AW1 L IH0 N', u'K EY1 OW0 L IH0 N']",
-AW,Landau,[u'L AE1 N D AW2'],
-AW,Lauder,"[u'L AO1 D ER0', u'L AW1 D ER0']",
 AW,Macao,[u'M AH0 K AW1'],
 AW,Maori,[u'M AW1 R IY0'],
 AW,Maoris,"[u'M EY1 ER0 IH0 S', u'M AW1 R IY0 Z']",
-AW,Menopause,[u'M EH1 N AH0 P AW2 Z'],
 AW,Paolo,[u'P AW1 L OW0'],
 AW,Sao,[u'S AW1'],
-AW,Sauerkraut,[u'S AW1 ER0 K R AW2 T'],
 AW,Taoism,[u'D AW1 IH0 Z AH0 M'],
-success:,19,out of,753
+success:,9,out of,753

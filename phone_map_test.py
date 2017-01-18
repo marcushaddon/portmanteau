@@ -30,5 +30,5 @@ def test_phone(phone, pattern):
 
         writer.writerow({'phone': 'success:', 'word string': total_failed, 'phones_array': 'out of', 'total': str(total)})
 
-phone = 'AA'
-test_phones()
+phone = 'ZH'
+test_phone(phone, phones[phone])
