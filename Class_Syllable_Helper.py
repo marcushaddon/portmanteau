@@ -59,7 +59,17 @@ class Syllable_Helper:
     'ZH': r"s|ge*" # hmm
     }
 
-    syllable_regex = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)([A-Z]+\s)(?!([A-Z]+[0-2]\s)))|(([A-Z]+\s)+([A-Z]+[0-2]\s))|(([A-Z]+[0-2]\s)([A-Z]+\s))"
+    # for reference
+    v = r"([A-Z]+[0-2]\s)"
+    c = r"([A-Z]+\s)"
+
+    cvc = r"(([A-Z]+\s)+([A-Z]+[0-2]\s)+([A-Z]+\s)(?!([A-Z]+[0-2]\s)))"
+    cv = r"(([A-Z]+\s)+([A-Z]+[0-2]\s))(?!([A-Z]+[0-2]\s))"
+    vc = r"(([A-Z]+[0-2]\s)([A-Z]+\s))"
+    cvvc = r"(?P<dipthong>([A-Z]+\s)*([A-Z]+[0-2]\s){2}([A-Z]+\s))"
+
+    syllable_regex = cvvc + "|" + cvc + "|" + cv + "|" + vc
+
 
 # output should be:
 # [['mar', ['M', 'AA', 'R']], ['cus', ['K', 'AH', 'S']] ]
@@ -141,13 +151,21 @@ class Syllable_Helper:
         while len(phones_string) > 0:
             syllable_match = re.search(self.syllable_regex, phones_string)
             if syllable_match:
-                syllable = syllable_match.group()
-                phones_syllables_array.append(syllable.rstrip())
-                phones_string = phones_string.replace(syllable, "")
+                if syllable_match.group("dipthong"):
+                    dipthong = syllable_match.group("dipthong")
+                    middle = re.search(self.v, dipthong).end()
+                    first = dipthong[:middle].rstrip()
+                    second = dipthong[middle:].rstrip()
+                    phones_syllables_array.extend([first, second])
+                    phones_string = phones_string.replace(dipthong, "")
+                else:
+                    syllable = syllable_match.group()
+                    phones_syllables_array.append(syllable.rstrip())
+                    phones_string = phones_string.replace(syllable, "")
             else:
                 # TEMPORARY
                 print "SYLLABLE HELPER OUT OF IDEAS"
-                phones_syllables_array[-1] += phones_string.rstrip()
+                phones_syllables_array[-1] = phones_syllables_array[-1] + " " + phones_string.rstrip()
                 phones_string = ""
 
         return phones_syllables_array

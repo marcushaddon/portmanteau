@@ -29,7 +29,13 @@ class Word(db.Model):
 
     @property
     def syllables(self):
-        return word_to_syllables(self.word.lower())
+        helper = Syllable_Helper()
+        phones_syllables = helper.split_phones_into_syllables(self.phones[0])
+        letter_syllable_array = []
+        for i in range(0, len(phones_syllables)):
+            letter_syllable = helper.map_letters_to_phones(self.word.lower(), phones_syllables[i])
+            letter_syllable_array.append(letter_syllable)
+        return letter_syllable_array
 
     @property
     def phones(self):

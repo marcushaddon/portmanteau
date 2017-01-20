@@ -5,20 +5,16 @@ from Class_Syllable_Helper import Syllable_Helper
 
 class Portmanteau_Helper:
     def get_matches(self, string, page_size = 20, page = 1):
-        # Initialize a Word from the word we get so we can get its last phones
-        word = Word(string)
-        last_phones = word.last_phones
-
-
         # Pagination stuff
         start = page_size * (page - 1)
         stop = start  + page_size
 
-        # Format phones for pronouncing
-        # Evenutally this will be a dynamically selected regex
-        search_string = " ".join(last_phones)
-        # Replace any consonant group with a regex catching any consonant group
-        search_pattern = re.sub(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", "[BCDFGHJKLMNPQRSTVWXZ]+", search_string)
+        # Initialize a Word from the word we get so we can get its last phones
+        word = Word(string)
+        last_phones = word.last_phones
+
+        search_pattern = self.choose_search_pattern(last_phones)
+
         matches = pronouncing.search("^" + search_pattern)
 
         # See which of these have entries in our english dictionary
@@ -46,20 +42,19 @@ class Portmanteau_Helper:
             overlapping_phones = match.group()
             letters_to_remove = s.map_letters_to_phones(word2_obj.word, overlapping_phones)
 
-            # TODO: This is a stopgap solution
+            # TODO: This is a stopgap solution (throws page size off!)
             if len(letters_to_remove) > 0:
-                # NOTE: I might need to remove everything before where this matches too
-                # index_of_match = word2_obj.word.index(letters_to_remove)
-                # index_of_end_of_match = index_of_match + len(letters_to_remove)
-                # second_part = word2_obj.word[index_of_end_of_match:]
-                second_part = re.sub(letters_to_remove, "", word2_obj.word)
-                portmanteau = word1 + second_part
+                if (len(word2_obj.word) - len(letters_to_remove) < 4):
+                    result = False
+                else:
+                    second_part = re.sub(letters_to_remove, "", word2_obj.word)
+                    portmanteau = word1 + second_part
 
-                result = {
-                "portmanteau": portmanteau,
-                "word1": word1,
-                "word2": word2_obj.word
-                }
+                    result = {
+                    "portmanteau": portmanteau,
+                    "word1": word1,
+                    "word2": word2_obj.word
+                    }
             else:
                 result = False
         else:
@@ -67,6 +62,21 @@ class Portmanteau_Helper:
 
 
         return result
+
+    def choose_search_pattern(self, trailing_phones):
+        #experimental
+        cvc = re.match(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", trailing_phones[-1])
+        if cvc:
+            any_accent = re.sub(r"\d","[0-2]", trailing_phones[-2])
+            search_pattern = "({0}\s)?{1}".format(any_accent, trailing_phones[-1])
+            print "SEARCH PATTERN: ^" + search_pattern
+        else:
+            search_string = " ".join(trailing_phones)
+            # THIS IS WHERE I NEED TO BE EXPERIMENTING
+
+            search_pattern = re.sub(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", "[BCDFGHJKLMNPQRSTVWXZ]+", search_string)
+            print "SEARCH PATTERN: ^" + search_pattern
+        return search_pattern
 
     def get_portmanteaus(self, word, page_size=20, page=1):
         candidates = self.get_matches(word, page_size, page)
