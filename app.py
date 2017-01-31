@@ -20,7 +20,7 @@ def get_candidates(word):
 	candidates = helper.get_matches(word)
 	return str(candidates["matches"])
 
-@app.route('/api/portmanteaus/<word>')
+@app.route('/api/<word>/portmanteaus')
 def get_portmanteaus(word):
 	page_size = request.args.get('page_size') or 20
 	page = request.args.get('page') or 1

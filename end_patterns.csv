@@ -1,0 +1,84 @@
+word,ending_pattern
+abut: ,v c 
+abuts: ,v c c 
+abutted: ,v c 
+abutting: ,v c 
+but: ,c v c 
+but's: ,c v c c 
+butka: ,c v 
+butkiewicz: ,c v c 
+butkiewicz: ,c v c 
+butkovich: ,c v c 
+butkus: ,c v c 
+butler: ,c v 
+butler's: ,c v c 
+butlers: ,c v c 
+butman: ,c v c 
+butner: ,c v 
+butrick: ,c v c 
+buts: ,c v c c 
+butson: ,c v c 
+butt: ,c v c 
+buttars: ,c v c 
+butter: ,c v 
+butterball: ,c v c 
+butterballs: ,c v c c 
+butterbaugh: ,c v 
+buttercup: ,c v c 
+buttercups: ,c v c c 
+buttered: ,c v c 
+butterfat: ,c v c 
+butterfield: ,c v c c 
+butterfields: ,c v c c c 
+butterflies: ,c v c 
+butterfly: ,c v 
+butterfly's: ,c v c 
+butterick: ,v c 
+butterick's: ,v c c 
+buttering: ,v c 
+buttermilk: ,c v c c 
+buttermore: ,c v c 
+butters: ,c v c 
+butterscotch: ,c v c 
+butterworth: ,c v c 
+buttery: ,c v c v v 
+butthead: ,c v c 
+butting: ,c v c 
+buttke: ,c v 
+buttler: ,c v 
+buttner: ,c v 
+buttock: ,c v c 
+buttocks: ,c v c c 
+button: ,c v c 
+buttoned: ,c v c c 
+buttonhole: ,c v c 
+buttonholed: ,c v c c 
+buttonholes: ,c v c c 
+buttons: ,c v c c 
+buttonville: ,c v c 
+buttram: ,c v c 
+buttress: ,c v c 
+buttressed: ,c v c c 
+buttresses: ,c v c 
+buttresses: ,c v c 
+buttressing: ,c v c 
+buttrey: ,c v 
+buttrick: ,c v c 
+buttrum: ,c v c 
+buttry: ,c v 
+butts: ,c v c c 
+butz: ,c v c c 
+butzberger: ,c v 
+butzen: ,c v c 
+butzer: ,c v 
+butzin: ,c v c 
+rebut: ,c v c 
+rebut: ,c v c 
+rebuttal: ,c v c 
+rebuttal: ,c v c 
+rebuttals: ,c v c c 
+rebutted: ,c v c 
+rebutting: ,c v c 
+rebutting: ,c v c 
+unbutton: ,c v c 
+unbuttoned: ,c v c c 

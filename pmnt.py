@@ -1,11 +1,21 @@
-from Class_Portmanteau_Helper import Portmanteau_Helper as H
+from model import Word, db
+import pronouncing
+from Class_Syllable_Helper import Syllable_Helper
+from Class_Portmanteau_Helper import Portmanteau_Helper
+import csv
 
-h = H()
+with open('end_patterns.csv', 'w') as csvfile:
+    fieldnames = ['word', 'ending_pattern']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
 
-test = h.get_portmanteaus("ass")
+    p_helper = Portmanteau_Helper()
 
-for thing in test:
-    print thing["word1"] + " + " + thing["word2"] + " = " + thing["portmanteau"]
-
-
-# Why was R AE2 SH AH0 N AE1 L a match for [BCDFGHJKLMNPQRSTVWXZ]+ AE2 [BCDFGHJKLMNPQRSTVWXZ]+?
+    word = Word('butt')
+    phones = " ".join(word.last_phones)
+    matches = pronouncing.search(phones)
+    for match in matches:
+        match_word = Word(match)
+        last_phones = match_word.last_phones
+        pattern = p_helper.choose_search_pattern(last_phones)
+        writer.writerow({"word": match_word, "ending_pattern": pattern})

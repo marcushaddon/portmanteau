@@ -132,10 +132,12 @@ class Syllable_Helper:
     # Extract letter group from word that corresponds to a group of phones
     def map_letters_to_phones(self, word, phones_string):
         master_pattern = r""
+        phones_array = phones_string.rstrip()
         phones_array = phones_string.split(" ")
         for phone in phones_array:
-            pattern = self.phoneme_map[re.sub(r"\d", "", phone)]
-            master_pattern += "(" + pattern + ")"
+            if phone != "":
+                pattern = self.phoneme_map[re.sub(r"\d", "", phone)]
+                master_pattern += "(" + pattern + ")"
 
         match = re.search(master_pattern, word, re.IGNORECASE)
         if match:
@@ -145,6 +147,7 @@ class Syllable_Helper:
             return ""
 
     def split_phones_into_syllables(self, phones_string):
+        temp_phones_string = phones_string
         phones_string += " "
         phones_syllables_array = []
 
@@ -164,7 +167,7 @@ class Syllable_Helper:
                     phones_string = phones_string.replace(syllable, "")
             else:
                 # TEMPORARY
-                print "SYLLABLE HELPER OUT OF IDEAS"
+                print "SYLLABLE HELPER OUT OF IDEAS. Phones: " + temp_phones_string +" So Far: " + "/".join(phones_syllables_array) +  ", Remaining: " + phones_string
                 phones_syllables_array[-1] = phones_syllables_array[-1] + " " + phones_string.rstrip()
                 phones_string = ""
 

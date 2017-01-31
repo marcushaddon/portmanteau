@@ -14,7 +14,7 @@ class Portmanteau_Helper:
         last_phones = word.last_phones
 
         search_pattern = self.choose_search_pattern(last_phones)
-
+        print "SEARCH PATTERN " + search_pattern
         matches = pronouncing.search("^" + search_pattern)
 
         # See which of these have entries in our english dictionary
@@ -64,21 +64,29 @@ class Portmanteau_Helper:
         return result
 
     def choose_search_pattern(self, trailing_phones):
-        #experimental
-        cvc = re.match(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", trailing_phones[-1])
-        if cvc:
-            any_accent = re.sub(r"\d","[0-2]", trailing_phones[-2])
-            search_pattern = "({0}\s)?{1}".format(any_accent, trailing_phones[-1])
-            print "SEARCH PATTERN: ^" + search_pattern
-        else:
-            search_string = " ".join(trailing_phones)
-            # THIS IS WHERE I NEED TO BE EXPERIMENTING
+        s_helper = Syllable_Helper()
+        phones_string = " ".join(trailing_phones) + " "
+        print "INPUT: " + phones_string
+        v_replace = re.sub(s_helper.v, 'v ', phones_string)
+        pattern = re.sub(s_helper.c, 'c ', v_replace)
 
-            search_pattern = re.sub(r"\b[BCDFGHJKLMNPQRSTVWXZ]+\b", "[BCDFGHJKLMNPQRSTVWXZ]+", search_string)
-            print "SEARCH PATTERN: ^" + search_pattern
-        return search_pattern
+        print "PATTERN: " + pattern
+
+        if pattern == 'c v c ':
+            template = s_helper.c + '*' + s_helper.v + trailing_phones[-1]
+        elif pattern == 'c v ':
+            template = s_helper.c + trailing_phones[-1]
+        elif pattern == 'v c c ':
+            template = s_helper.v + trailing_phones[-2] + " " + trailing_phones[-1]
+        else:
+            template = trailing_phones[-1]
+
+        #temp
+        search_pattern = trailing_phones[-1]
+        return template
 
     def get_portmanteaus(self, word, page_size=20, page=1):
+
         candidates = self.get_matches(word, page_size, page)
         portmantarray = []
         for candidate in candidates["matches"]:
